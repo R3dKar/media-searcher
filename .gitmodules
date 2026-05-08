@@ -1,0 +1,9 @@
+[submodule "libs/nlohmann-json"]
+	path = libs/nlohmann-json
+	url = https://github.com/nlohmann/json
+[submodule "libs/cpp-httplib"]
+	path = libs/cpp-httplib
+	url = https://github.com/yhirose/cpp-httplib
+[submodule "libs/argparse"]
+	path = libs/argparse
+	url = https://github.com/p-ranav/argparse
