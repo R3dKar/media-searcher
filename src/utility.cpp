@@ -35,7 +35,7 @@ namespace media_searcher::utility {
     if (home && fs::is_directory(home)) {
       return home;
     } else {
-      return std::getpwuid(std::getuid())->pw_dir;
+      return getpwuid(getuid())->pw_dir;
     }
 #endif
   }
