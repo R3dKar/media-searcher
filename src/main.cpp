@@ -9,7 +9,7 @@
 int main(int argc, char** argv) {
   namespace fs = std::filesystem;
 
-  argparse::ArgumentParser program(argv[0]);
+  argparse::ArgumentParser program(argv[0], MEDIA_SEARCHER_VERSION);
 
   auto& work_mode = program.add_mutually_exclusive_group();
   work_mode.add_argument("-s", "--server").help("starts server").default_value(false).implicit_value(true);
