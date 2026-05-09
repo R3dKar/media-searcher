@@ -19,7 +19,7 @@ int main(int argc, char** argv) {
   program.add_argument("-S", "--search-dir").help("directory where media is searched").store_into(search_dir);
 
   // Server
-  size_t port = 1234;
+  uint16_t port = 1234;
   program.add_argument("-p", "--port").help("server port to serve on").store_into(port);
 
   // File
@@ -40,6 +40,26 @@ int main(int argc, char** argv) {
   // Prepare paths
   search_dir = media_searcher::utility::expand_home(search_dir);
   output_file_path = media_searcher::utility::expand_home(output_file_path);
+
+  // Check options
+  // Search directory
+  if (!fs::exists(search_dir)) {
+    std::cerr << "Search directory does not exist: " << search_dir << '\n';
+    return 1;
+  } else if (!fs::is_directory(search_dir)) {
+    std::cerr << "Search directory is not a directory: " << search_dir << '\n';
+    return 1;
+  }
+
+  // Output file path
+  const fs::path output_parent_path = output_file_path.parent_path();
+  if (!output_parent_path.empty() && (!fs::exists(output_parent_path) || !fs::is_directory(output_parent_path))) {
+    std::cerr << "Output file directory does not exists: " << output_parent_path << '\n';
+    return 1;
+  } else if (fs::exists(output_file_path) && !fs::is_regular_file(output_file_path)) {
+    std::cerr << "Output file exists and is not a file: " << output_file_path << '\n';
+    return 1;
+  }
 
   if (program.is_used("--server")) {
     // Server
